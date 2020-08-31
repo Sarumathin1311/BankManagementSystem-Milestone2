@@ -24,40 +24,37 @@ public class MutualFundController {
 MutualFundService service;
 
 Logger logger = LoggerFactory.getLogger(MutualFundController.class);
-
+  
+//add mutualfund account
+  
 @PostMapping("/addMutualFunds")
 public ResponseEntity<MutualFund> addhospital(@RequestBody MutualFund mutualfund) {
 MutualFund fundDetails = service.addMutualFundDetails(mutualfund);
 return new ResponseEntity<MutualFund>(fundDetails, HttpStatus.OK);
 }
 
-// GET TRANSACTION DETAILS BY PAN NO
+//get mutualfund account by PANno
 
 @GetMapping(value = "/getFundDetails/{panNo}", produces = "application/json")
 public List<MutualFund> getAccountDetail(@PathVariable String panNo) {
 List<MutualFund> funds = service.getDetail(panNo);
-
-// EXCEPTION HANDLING
-
 if (funds.isEmpty()) {
-throw new RuntimeException("No transaction details exist!! ");
+throw new RuntimeException("No details found ");
 } else {
-logger.info("Response: Successfully Executed!");
+logger.info("Response Executed");
 }
 return funds;
 }
 
-// GET
+//get investment details using PANno and fundId
+  
 @GetMapping(value = "/getInvestmentDetails/{panNo}/{fundId}", produces = "application/json")
 public List<MutualFund> findTransactionDetails(@PathVariable String panNo, @PathVariable Integer fundId) {
 List<MutualFund> fundDetails = service.getTransactionDetail(panNo, fundId);
-
-// EXCEPTION HANDLING
-
 if (fundDetails.isEmpty()) {
-throw new RuntimeException("No Investment details exist!! ");
+throw new RuntimeException("No details found ");
 } else {
-logger.info("Response: Successfully Executed!");
+logger.info("Response Executed");
 }
 return fundDetails;
 }
