@@ -32,17 +32,16 @@ public class BankAccountController
 		return new ResponseEntity<Account>(accountdetails, HttpStatus.OK);
     }
 
-// GET ACCOUNT DETAILS BY PAN NO
+// get account by PANno
 
 	@GetMapping(value = "/get/{panNo}", produces = "application/json")
 	public ResponseEntity<List<Account>>getDetail(@PathVariable String panNo)
 	{
 		List<Account> account=new ArrayList<Account>();
 		account=accountservice.getDetail(panNo);
-	// Exception handling if no account details exist for specific user
 		if (account.isEmpty())
 		{
-			throw new RuntimeException("No Account details exist for this user!!");
+			throw new RuntimeException("No Accountfound");
 		} 
 		else
 		{
@@ -51,20 +50,19 @@ public class BankAccountController
 			return new ResponseEntity<List<Account>>(account,HttpStatus.OK);
 	 }
 
-// GET ALL BANK ACCOUNT DETAILS
+// get all accounts
 
 	@GetMapping("/getAll")
 	List<Account> getAccountDetail()
 	{
 		List<Account> account = accountservice.getAccount();
-		// Exception handling for account details
 		if (account.isEmpty()) 
 		{
-			throw new RuntimeException("No Account exist!!");
+			throw new RuntimeException("No Account found");
 		} 
 		else 
 		{
-			logger.info("Account details");
+			logger.info(" details found");
 		}
 		return account;
 	    }
